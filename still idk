@@ -1,0 +1,85 @@
+use serde::{Deserialize, Serialize};
+use sha2::{Digest, Sha256};
+use std::{fs, path::Path};
+use chrono::Utc;
+
+// ---- Data Structures ---- //
+
+#[derive(Debug, Serialize, Deserialize)]
+pub struct ProvenanceEvent {
+    pub event_type: String,
+    pub model_id: String,
+    pub parent_model_id: Option<String>,
+    pub weights_cid: Option<String>,
+    pub data_hash: Option<String>,
+    pub code_hash: Option<String>,
+    pub hyperparams_hash: Option<String>,
+    pub compute_proof: Option<String>,
+    pub timestamp: String,
+    pub signature: Option<String>,
+}
+
+impl ProvenanceEvent {
+    pub fn new(event_type: &str, model_id: &str) -> Self {
+        ProvenanceEvent {
+            event_type: event_type.to_string(),
+            model_id: model_id.to_string(),
+            parent_model_id: None,
+            weights_cid: None,
+            data_hash: None,
+            code_hash: None,
+            hyperparams_hash: None,
+            compute_proof: None,
+            timestamp: Utc::now().to_rfc3339(),
+            signature: None,
+        }
+    }
+}
+
+// ---- Utility Functions ---- //
+
+fn hash_file(path: &str) -> String {
+    let data = fs::read(path).expect("Failed to read file");
+    let mut hasher = Sha256::new();
+    hasher.update(data);
+    format!("{:x}", hasher.finalize())
+}
+
+fn hash_json<T: Serialize>(value: &T) -> String {
+    let json = serde_json::to_string(value).unwrap();
+    let mut hasher = Sha256::new();
+    hasher.update(json.as_bytes());
+    format!("{:x}", hasher.finalize())
+}
+
+// ---- Example Workflow ---- //
+
+fn main() {
+    // 1. Initialize run
+    let model_id = "kaspa_bert_v1";
+    let mut event = ProvenanceEvent::new("TRAIN_START", model_id);
+
+    event.data_hash = Some(hash_file("dataset_manifest.json"));
+    event.code_hash = Some(hash_file("train_script.rs"));
+    event.hyperparams_hash = Some(hash_json(&serde_json::json!({
+        "lr": 3e-5,
+        "batch": 64
+    })));
+
+    println!("Start event: {}", serde_json::to_string_pretty(&event).unwrap());
+
+    // 2. Simulate training checkpoint
+    let checkpoint_path = "checkpoints/final_weights.bin";
+    if Path::new(checkpoint_path).exists() {
+        event.weights_cid = Some(hash_file(checkpoint_path));
+        event.event_type = "TRAIN_END".to_string();
+        event.compute_proof = Some(hash_file("train_log.txt"));
+        event.timestamp = Utc::now().to_rfc3339();
+    }
+
+    println!("End event: {}", serde_json::to_string_pretty(&event).unwrap());
+
+    // TODO:
+    // - Sign event with ed25519 key
+    // - Broadcast to Kaspa node via RPC or REST
+}
