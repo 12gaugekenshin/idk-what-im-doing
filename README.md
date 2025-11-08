@@ -39,20 +39,31 @@ That means every dataset, training checkpoint, and release can be verified throu
 How It Works
 
 Each AI lifecycle event (training start, checkpoint, final release, evaluation) produces a signed JSON record containing:
+
 File and dataset hashes
+
 Code and hyperparameter hashes
+
 Timestamp (Kaspa-aligned)
+
 Optional off-chain storage references (IPFS / Filecoin)
 
 These records can then be anchored on-chain to Kaspa via transaction payloads or RPC submissions, forming an immutable history of model evolution.
 
 Features (Planned / Conceptual)
+
 Event Schema for model lineage (Rust & Python examples included)
+
 Hashing Utilities for datasets, weights, and training logs
+
 Kaspa Timestamping — proof-of-existence through block inclusion
+
 Ed25519 Signing for model ownership and integrity
+
 Off-chain Artifact Storage (IPFS, Filecoin)
+
 Async Event Broadcasting to Kaspa RPC nodes
+
 Energy-Proof Integration (via KII / ZETA for carbon accounting)
 
 Example Code
