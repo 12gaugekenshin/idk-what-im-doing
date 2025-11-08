@@ -71,10 +71,10 @@ Async Event Broadcasting to Kaspa RPC nodes
 
 Energy-Proof Integration (via KII / ZETA for carbon accounting)
 
-Example Code
+Example Codes (I do not code! These examples were generated as a concept to further embody the idea! They probably will not work as i have no clue on developing / writing code!)
 
-See /examples for working Rust and Python prototypes.
-These generate JSON events representing model checkpoints and compute proofs, ready for later integration with Kaspa RPC.
+See /idk's for Rust and Python prototypes.
+These (would if working) generate JSON events representing model checkpoints and compute proofs, ready for later integration with Kaspa RPC.
 
 cargo run
 
