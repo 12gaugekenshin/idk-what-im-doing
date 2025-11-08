@@ -8,7 +8,11 @@ My focus is on the ideology and design direction - how math, proof, and transpar
 
 
 
+Proof-of-Compute-Integrity (PoCI)
 
+Proof-of-Compute-Integrity (PoCI) is a proposed verification framework that proves computation happened as claimed - with authentic inputs, code, data, and energy - and that the resulting artifacts remain unaltered.
+Unlike Proof-of-Work, which measures raw energy expenditure, PoCI measures verifiable computational honesty: it links each compute event (such as model training or inference) to cryptographic hashes, signed attestations, and on-chain anchors.
+In essence, PoCI transforms computation itself into a provable act of integrity, ensuring that every model, dataset, or result can be traced back to its true origin in both time and energy.
 
 
 Kaspa–AI Provenance System
