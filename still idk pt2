@@ -1,0 +1,18 @@
+from kaspa_prov import Provenance
+
+prov = Provenance(owner_key="ed25519:...", kaspa_rpc="http://...", ipfs_api="http://...")
+
+run = prov.train_start(
+    model_name="my-bert",
+    data_root=prov.hash_dataset("data/"),
+    code_hash=prov.hash_git("."),
+    hparams_hash=prov.hash_json({"lr": 3e-5, "batch": 64})
+)
+
+for step, loss in train_loop():
+    if step % 1000 == 0:
+        cid = prov.pin_weights(save_checkpoint())
+        prov.train_step(run, step=step, weights_cid=cid, compute_proof=prov.hash_log("logs.txt"))
+
+final_cid = prov.pin_weights(save_checkpoint("final.pt"))
+prov.train_end(run, final_weights_cid=final_cid, metrics_hash=prov.hash_json(metrics))
