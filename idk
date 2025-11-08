@@ -1,0 +1,10 @@
+EventType: MODEL_INIT | TRAIN_START | TRAIN_STEP | TRAIN_END | EVAL | RELEASE
+model_id: keccak256(model_name || owner_pubkey)
+parent_model_id: (optional for forks)
+weights_cid: (IPFS/Filecoin CID) or blank if not yet produced
+data_hash: merkle_root(dataset shard hashes)
+code_hash: sha256(repo commit)
+hyperparams_hash: sha256(json)
+compute_proof: sha256(job_log || zk-proof stub)
+timestamp: node time
+sig: ed25519/secp256k1 over payload
