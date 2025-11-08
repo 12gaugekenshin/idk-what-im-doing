@@ -8,3 +8,90 @@ hyperparams_hash: sha256(json)
 compute_proof: sha256(job_log || zk-proof stub)
 timestamp: node time
 sig: ed25519/secp256k1 over payload
+
+
+
+
+
+
+) Minimal components
+
+Provenance SDK (client)
+
+Languages: Python (rust / python hook), Go/TS (services).
+
+Hooks: on_train_start, on_checkpoint, on_train_end, on_eval, on_release.
+
+Produces: artifacts hashes + signed payloads + pushes to Kaspa.
+
+Artifact store (pluggable)
+
+IPFS/Filecoin for weights/datasets.
+
+S3/MinIO fallback for private labs.
+
+CID returned → referenced in on-chain event.
+
+Kaspa submitter
+
+Small service that aggregates signed events and posts a single Kaspa TX per event (or micro-batch).
+
+Retries, fee mgmt, and confirms when 1h horizon seals it.
+
+Indexer + API
+
+Listens to Kaspa mempool/chain.
+
+Decodes provenance payloads.
+
+Exposes GraphQL/REST: model lineage, diffs, verify endpoints.
+
+Explorer (viewer)
+
+Web UI: show Model → Parents → Datasets → Checkpoints → Release.
+
+“Verify” button recomputes local hashes and compares on-chain commitments.
+
+) Data model (simple, practical)
+
+Model: model_id, current weights_cid, owner_pubkey.
+
+Event: txid, model_id, type, data_hash, code_hash, hyperparams_hash, compute_proof, timestamp, sig, parent_model_id, weights_cid.
+
+Dataset: dataset_id, merkle_root, optional manifest_cid.
+
+Release: pointer to a signed bundle (weights + eval report CID).
+
+All strong identifiers are content hashes. Lineage = follow parent_model_id.
+
+) Protocol flows (happy path)
+
+A) New training run
+
+SDK computes:
+
+data_merkle_root, code_hash, hyperparams_hash.
+
+Emit TRAIN_START (Kaspa TX).
+
+Each N steps/epochs:
+
+Save checkpoint → weights_cid.
+
+Emit TRAIN_STEP (Kaspa TX) w/ weights_cid, compute_proof.
+
+Finish:
+
+Emit TRAIN_END with final weights_cid, metrics hash.
+
+B) Evaluation
+
+Produce eval_report_cid + eval_hash.
+
+Emit EVAL event linking final weights.
+
+C) Release
+
+Bundle weights_cid + eval_report_cid + license → release_cid.
+
+Emit RELEASE (Kaspa TX). After ~1h → immutable.
