@@ -1,2 +1,22 @@
 kaspa-prov verify --model-id 0xabc... --release-txid 0xdef...
 # checks chain inclusion, sigs, and hashes of fetched artifacts
+
+
+
+) APIs you’d expose (indexer)
+
+GET /models/{model_id} → summary + latest release
+
+GET /models/{model_id}/lineage → parents/children graph
+
+GET /events?model_id=...&type=TRAIN_STEP → paginated steps
+
+POST /verify → submit local hashes, get pass/fail + proof
+
+) Success metrics (MVP)
+
+TTV (time-to-verity): < 2s after event mined (pre-finality), sealed after ~1h.
+
+Overhead: SDK adds ≤ 1–2% wall-clock to training (uploads + commit).
+
+Repro score: Independent verifier can reproduce lineage with zero trust in the publisher.
