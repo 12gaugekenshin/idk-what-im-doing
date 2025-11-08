@@ -17,9 +17,9 @@ Anchoring Artificial Intelligence in Physics, Proof, and Transparency
 
 Overview
 
-This repository is an early-stage concept exploring how AI model provenance (origin, lineage, and training integrity) could be anchored to the Kaspa blockchain — using its high-throughput, proof-of-work DAG architecture to timestamp, verify, and secure model events.
+This repository is an early-stage concept exploring how AI model provenance (origin, lineage, and training integrity) could be anchored to the Kaspa blockchain - using its high-throughput, proof-of-work DAG architecture to timestamp, verify, and secure model events.
 
-It’s not a finished product — it’s an open foundation meant to inspire and enable builders, researchers, and Kaspa developers to expand on the idea.
+It’s not a finished product - it’s an open foundation meant to inspire and enable builders, researchers, and Kaspa developers to expand on the idea.
 
 Core Concept
 
@@ -30,7 +30,7 @@ What energy or compute was used
 Whether weights or results were altered after training
 
 The Kaspa–AI Provenance System aims to fix that by linking each model’s key lifecycle events directly to the Kaspa ledger.
-That means every dataset, training checkpoint, and release can be verified through math — not trust.
+That means every dataset, training checkpoint, and release can be verified through math - not trust.
 
 How It Works
 
