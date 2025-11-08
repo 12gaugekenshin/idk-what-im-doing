@@ -75,9 +75,13 @@ Produces:
 Use Cases
 
 AI Labs: verifiable model history and compliance trails
+
 Compute Networks: proof-of-training or proof-of-inference
+
 Energy Systems: carbon-accounted compute anchored to PoW
+
 Open Research: public, immutable model records
+
 Decentralized AI: machine-to-machine payment and trust
 
 Vision
