@@ -17,7 +17,7 @@ In essence, PoCI transforms computation itself into a provable act of integrity,
 Kaspa–AI Provenance isn’t just a technical concept - it’s a statement of belief.
 Proof-of-Compute-Integrity (PoCI) represents a world where truth in computation doesn’t come from reputation, branding, or authority - but from physics, energy, and math.
 Every hash, signature, and timestamp forms a digital law of nature: what happened, happened.
-By merging Kaspa’s time-energy consensus with transparent AI provenance, we move toward systems that are not only decentralized — but honest by design.
+By merging Kaspa’s time-energy consensus with transparent AI provenance, we move toward systems that are not only decentralized - but honest by design.
 
 
 Kaspa–AI Provenance System
